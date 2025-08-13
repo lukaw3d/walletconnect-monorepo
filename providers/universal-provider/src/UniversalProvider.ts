@@ -527,7 +527,7 @@ export class UniversalProvider implements IUniversalProvider {
       // otherwise events are emitted twice
       // once on the chainChanged event and once triggered by `this.getProvider(namespace).setDefaultChain(chainId);`
       this.events.emit("chainChanged", chainId);
-      this.emitAccountsChangedOnChainChange({ namespace, previousChainId, newChainId: caip2Chain });
+      this.emitAccountsChangedOnChainChange({ namespace, previousChainId, newChainId: chainId });
     }
 
     await this.persist("namespaces", this.namespaces);
@@ -553,7 +553,7 @@ export class UniversalProvider implements IUniversalProvider {
       const accounts = this.session?.namespaces[namespace]?.accounts;
       if (!accounts) return;
       const newChainIdAccounts = accounts
-        .filter((account) => account.includes(`${newChainId}:`))
+        .filter((account) => account.includes(`${namespace}:${newChainId}:`))
         .map(parseCaip10Account);
       if (!isValidArray(newChainIdAccounts)) return;
       this.events.emit("accountsChanged", newChainIdAccounts);
