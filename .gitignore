@@ -21,7 +21,6 @@ jspm_packages
 .npm
 .eslintcache
 .node_repl_history
-*.tgz
 **/dist
 **/build
 .DS_Store
